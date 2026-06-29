@@ -1,0 +1,7 @@
+com\revature\models\Manager.class
+com\revature\DAOs\ManagerDAO.class
+com\revature\models\LoginDTO.class
+com\revature\utils\ConnectionUtil.class
+com\revature\DAOs\ManagerDAOInterface.class
+com\revature\DAOs\AuthDAO.class
+com\revature\Main.class
