@@ -1,12 +1,9 @@
-com\revature\models\Expense.class
-com\revature\models\Manager.class
-com\revature\models\Approval.class
-com\revature\DAOs\ManagerDAO.class
-com\revature\models\LoginDTO.class
 com\revature\utils\ConnectionUtil.class
-com\revature\DAOs\ManagerDAOInterface.class
 com\revature\controllers\AuthController.class
 com\revature\DAOs\AuthDAO.class
 com\revature\Launcher.class
+com\revature\models\Expense.class
+com\revature\models\Approval.class
+com\revature\models\LoginDTO.class
 com\revature\Main.class
 com\revature\controllers\ManagerController.class

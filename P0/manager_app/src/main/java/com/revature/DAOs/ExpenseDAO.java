@@ -35,7 +35,16 @@ public class ExpenseDAO implements ExpenseDAOInterface{
                 expenseList.add(e);
             }
 
-            return expenseList;
+            if (expenseList.isEmpty()) 
+            {
+                System.out.println("No approvals found.");
+                return expenseList;
+            }
+            else
+            {
+                return expenseList;
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -67,7 +76,16 @@ public class ExpenseDAO implements ExpenseDAOInterface{
                 expenseList.add(e);
             }
 
-            return expenseList;
+            if (expenseList.isEmpty()) 
+            {
+                System.out.println("No approvals found.");
+                return expenseList;
+            }
+            else
+            {
+                return expenseList;
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -100,7 +118,19 @@ public class ExpenseDAO implements ExpenseDAOInterface{
                 expenseList.add(e);
             }
 
-            return expenseList;
+
+
+            if (expenseList.isEmpty()) 
+                {
+                    System.out.println("No approvals found.");
+                    return expenseList;
+                }
+            else
+                {
+                    return expenseList;
+                }
+
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -133,7 +163,16 @@ public class ExpenseDAO implements ExpenseDAOInterface{
                 expenseList.add(e);
             }
 
-            return expenseList;
+            if (expenseList.isEmpty()) 
+            {
+                System.out.println("No approvals found.");
+                return expenseList;
+            }
+            else
+            {
+                return expenseList;
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -166,7 +205,16 @@ public class ExpenseDAO implements ExpenseDAOInterface{
                 expenseList.add(e);
             }
 
-            return expenseList;
+            if (expenseList.isEmpty()) 
+            {
+                System.out.println("No approvals found.");
+                return expenseList;
+            }
+            else
+            {
+                return expenseList;
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

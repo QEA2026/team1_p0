@@ -42,15 +42,29 @@ public class ApprovalDAO implements ApprovalDAOInterface{
                 );
                 approvalList.add(e);
             }
-            return approvalList;
 
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
-        return null;
+            if (approvalList.isEmpty()) 
+            {
+                System.out.println("No approvals found.");
+                return approvalList;
+            }
+            else
+            {
+                return approvalList;
+            }
+           
 
     }
 
+        catch (SQLException e){
+                if (e.getMessage().contains("No data found")) {
+                    System.out.println("No approvals found.");
+                } else {
+                    e.printStackTrace();
+                }
+            }
+        return null;
+    }
     // get approvals by Manager 
     @Override
     public ArrayList<Approval> getApprovalsByManager(String username) {
@@ -58,7 +72,7 @@ public class ApprovalDAO implements ApprovalDAOInterface{
         try(Connection conn = ConnectionUtil.getConnection()){
 
             //A string that will represent our SQL statement
-            String sql = "select * from approvals where reviewer_id = (select user_id from users where username = ?);";
+            String sql = "select * from approvals where reviewer = (select user_id from users where username = ?);";
 
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, username);
@@ -81,10 +95,25 @@ public class ApprovalDAO implements ApprovalDAOInterface{
                 );
                 approvalList.add(e);
             }
-            return approvalList;
+             if (approvalList.isEmpty()) 
+            {
+                System.out.println("No approvals found.");
+                return approvalList;
+            }
+            else
+            {
+                return approvalList;
+            }
 
         } catch (SQLException e){
-            e.printStackTrace();
+            if (e.getMessage().contains("No data found")) {
+                    System.out.println("No approvals found.");
+                    return new ArrayList<>(); // Return an empty list if no approvals are found
+                } else {
+                    e.printStackTrace();
+                }
+            
+            
         }
         return null;
 
@@ -120,10 +149,25 @@ public class ApprovalDAO implements ApprovalDAOInterface{
                 );
                 approvalList.add(a);
             }
-            return approvalList;
+
+             if (approvalList.isEmpty()) 
+            {
+                System.out.println("No approvals found.");
+                return approvalList;
+            }
+            else
+            {
+                return approvalList;
+            }
 
         } catch (SQLException e){
-            e.printStackTrace();
+            if (e.getMessage().contains("No data found")) {
+                System.out.println("No approvals found.");
+                return new ArrayList<>(); // Return an empty list if no approvals are found
+                } else {
+                    e.printStackTrace();
+                }
+            
         }
         return null; 
     }   
@@ -158,10 +202,24 @@ public class ApprovalDAO implements ApprovalDAOInterface{
                 );
                 approvalList.add(e);
             }
-            return approvalList;
+            
+             if (approvalList.isEmpty()) 
+            {
+                System.out.println("No approvals found.");
+                return approvalList;
+            }
+            else
+            {
+                return approvalList;
+            }
 
         } catch (SQLException e){
-            e.printStackTrace();
+            if (e.getMessage().contains("No data found")) {
+                System.out.println("No approvals found.");
+                return new ArrayList<>(); // Return an empty list if no approvals are found
+            } else {
+                e.printStackTrace();
+            }
         }
         return null;
 
@@ -197,10 +255,25 @@ public class ApprovalDAO implements ApprovalDAOInterface{
                 );
                 approvalList.add(e);
             }
-            return approvalList;
+            
+             if (approvalList.isEmpty()) 
+            {
+                System.out.println("No approvals found.");
+                return approvalList;
+            }
+            else
+            {
+                return approvalList;
+            }
+
 
         } catch (SQLException e){
-            e.printStackTrace();
+            if (e.getMessage().contains("No data found")) {
+                System.out.println("No approvals found.");
+                return new ArrayList<>(); // Return an empty list if no approvals are found
+            } else {
+                e.printStackTrace();
+            }
         }
         return null;
 

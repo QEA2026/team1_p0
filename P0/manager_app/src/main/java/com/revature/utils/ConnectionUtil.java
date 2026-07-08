@@ -24,8 +24,8 @@ public class ConnectionUtil {
         }
 
         //use this string in a method that gets connections
-        // String url = "jdbc:sqlite:exepense_manager.db";
-        String url = "jdbc:sqlite:C:\\Users\\Audrey\\team1_p0\\P0\\db\\p0test.db";
+        String url = "jdbc:sqlite:expense_manager.db";
+        // String url = "jdbc:sqlite:team1_p0\\P0\\db\\p0test.db";
 
         //This return statement is what returns our actual database Connection object
         return DriverManager.getConnection(url);

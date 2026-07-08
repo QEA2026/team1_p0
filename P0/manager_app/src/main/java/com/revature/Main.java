@@ -81,6 +81,7 @@ public class Main {
                                 // Expense Reports Menu
                                 case 1:
 
+                                    ExpenseMenuLoop:
                                     while (true) { 
                                          System.out.println("Expense Report Menu");
                                         System.out.println("Select an option: ");
@@ -140,7 +141,7 @@ public class Main {
                                                 System.out.println("End date: ");
                                                 String end_date = scanner.next();
 
-                                                System.out.println("Viewing reports between " + start_date + "and " + end_date);
+                                                System.out.println("Viewing reports between " + start_date + " and " + end_date);
                                                 expList = expDAO.getExpensesByDate(start_date, end_date);
                                                 for (Expense e: expList)
                                                 {
@@ -164,17 +165,29 @@ public class Main {
                                                 System.out.println();
                                                 break;
 
-                                            // exit   
+                                            // Exit
+                                            case 6:
+                                                System.out.println("Exiting the expense reports menu");
+                                                System.out.println();
+                                                break ExpenseMenuLoop;
+                                                
+
+
+                                            default:
+                                                System.out.println("Invalid option. Please try again.");
+                                                System.out.println();
+                                                break;
+
+
+                                             
 
                                             
 
                                         }
+
+                                       
                                     
-                                        if (new_choice == 6)
-                                        {
-                                            System.out.println("Exiting the expense reports menu");
-                                            System.out.println();
-                                        }
+                                      
 
                                         
                                 }
@@ -182,6 +195,7 @@ public class Main {
                                 // Approvals Menu
                                 case 2:
 
+                                ApprovalMenuLoop:
                                 while (true) 
                                 { 
                                     System.out.println("Approvals Menu");
@@ -201,12 +215,12 @@ public class Main {
                                             appList = appDAO.getApprovals();
                                             for (Approval a: appList)
                                             {
-                                                System.out.println(a);
                                                 Expense e = expDAO.getExpenseByID(a.getExpense_id());
-                                                System.out.println("----------------------------------------------");
+                                                System.out.println("---------------------- Expense Report ----------------------------");
                                                 System.out.println(e);
+                                                System.out.println("---------------------- Approval ----------------------------------");
+                                                System.out.println(a);
                                                 System.out.println();
-                                                
                                             }
                                             System.out.println();
                                             break;
@@ -218,10 +232,12 @@ public class Main {
                                             appList = appDAO.getApprovalsByStatus(status);
                                             for (Approval a: appList)
                                             {
-                                                System.out.println(a);
                                                 Expense e = expDAO.getExpenseByID(a.getExpense_id());
                                                 System.out.println("---------------------- Expense Report ----------------------------");
                                                 System.out.println(e);
+                                                System.out.println("---------------------- Approval ----------------------------------");
+                                                System.out.println(a);
+                                                System.out.println();
                                                
                                             }
                                             System.out.println();
@@ -238,8 +254,9 @@ public class Main {
                                                 Expense e = expDAO.getExpenseByID(a.getExpense_id());
                                                 System.out.println("---------------------- Expense Report ----------------------------");
                                                 System.out.println(e);
-                                                System.out.println("---------------------- Approval ----------------------------");
+                                                System.out.println("---------------------- Approval ----------------------------------");
                                                 System.out.println(a);
+                                                System.out.println();
                                                
                                             }
                                             System.out.println();
@@ -255,8 +272,9 @@ public class Main {
                                                 Expense e = expDAO.getExpenseByID(a.getExpense_id());
                                                 System.out.println("---------------------- Expense Report ----------------------------");
                                                 System.out.println(e);
-                                                System.out.println("---------------------- Approval ----------------------------");
+                                                System.out.println("---------------------- Approval ----------------------------------");
                                                 System.out.println(a);
+                                                System.out.println();
                                                
                                             }
                                             System.out.println();
@@ -274,7 +292,7 @@ public class Main {
                                                 Expense e = expDAO.getExpenseByID(a.getExpense_id());
                                                 System.out.println("---------------------- Expense Report ----------------------------");
                                                 System.out.println(e);
-                                                System.out.println("---------------------- Approval ----------------------------");
+                                                System.out.println("---------------------- Approval ----------------------------------");
                                                 System.out.println(a);
                                                 System.out.println();
                                             }
@@ -313,19 +331,18 @@ public class Main {
                                             System.out.println(n);
 
 
+                                        case 6:
+                                            System.out.println("Exiting the approvals menu");
+                                            System.out.println();
+                                            break ApprovalMenuLoop;
 
 
 
+                                        default:
+                                            System.out.println("Invalid option. Please try again.");
+                                            break;
 
-                                            break;        
 
-                                    }
-
-                                    if (ch == 6)
-                                    {
-                                        System.out.println("Exiting the approvals menu");
-                                        System.out.println();
-                                        break;
                                     }
 
                                     
@@ -334,6 +351,9 @@ public class Main {
 
                                    
                             }
+
+                            
+
 
                             // exit 
                             if (choice == 3)
@@ -349,21 +369,25 @@ public class Main {
 
                    
                     } catch (Exception e) {
-                        System.out.println("Login failed");
+                        System.out.println("Error. Exiting the program");
                     }
+                
+
+                case 2:
+                    System.out.println("Exiting the program...");
+                    scanner.close();
+                    return;
+
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+                    break;
 
             }
-
-            if (choice == 2)
-            {
-                System.out.println("Exiting the program...");
-                break;
-            }
-
+           
             
         }
 
-        scanner.close();
+        
 
 
     }
