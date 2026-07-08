@@ -107,16 +107,17 @@ public class ExpenseDAO implements ExpenseDAOInterface{
         return null;
     }
 
-    // get expenses by status 
+    // get expenses by date
     @Override
-    public ArrayList<Expense> getExpensesByDate(String date)
+    public ArrayList<Expense> getExpensesByDate(String start_date, String end_date)
     {
         try (Connection conn = ConnectionUtil.getConnection()) {
 
-            String sql = "select * from expenses where date = ?;";
+            String sql = "select * from expenses where date between ? and ?;";
             
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, date);
+            ps.setString(1, start_date);
+            ps.setString(2, end_date);
             ResultSet rs = ps.executeQuery();
             ArrayList<Expense> expenseList = new ArrayList<>();
 

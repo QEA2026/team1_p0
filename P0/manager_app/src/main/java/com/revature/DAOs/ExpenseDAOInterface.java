@@ -12,7 +12,7 @@ public interface ExpenseDAOInterface {
 
     ArrayList<Expense> getExpensesByStatus(String status);
 
-    ArrayList<Expense> getExpensesByDate(String date);
+    ArrayList<Expense> getExpensesByDate(String start_date, String end_date);
 
     ArrayList<Expense> getExpensesByCategory(String category);
 

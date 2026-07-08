@@ -137,8 +137,29 @@ public class Main {
                                             System.out.println("End date: ");
                                             String end_date = scanner.next();
 
-                                            break; 
+                                            System.out.println("Viewing reports between " + start_date + "and " + end_date);
+                                            expList = expDAO.getExpensesByDate(start_date, end_date);
+                                            for (Expense e: expList)
+                                            {
+                                                System.out.println(e);
+                                            }
+                                            System.out.println();
+                                            break;
 
+                                        // view expense reports by category
+
+                                        case 5:
+                                            System.out.println("Enter the keyword you want to search: ");
+                                            String category = scanner.next();
+                                            System.out.println("Viewing reports containing keyword " + category);
+
+                                            expList = expDAO.getExpensesByCategory(category);
+                                            for (Expense e: expList)
+                                            {
+                                                System.out.println(e);
+                                            }
+                                            System.out.println();
+                                            break;
 
                                     }   
 
