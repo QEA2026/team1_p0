@@ -1,11 +1,13 @@
-CREATE TABLE users (
+PRAGMA foreign_keys = ON;
+
+CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY,
     username TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL,
     role TEXT NOT NULL
 );
 
-CREATE TABLE expenses (
+CREATE TABLE IF NOT EXISTS expenses (
     id INTEGER PRIMARY KEY,
     user_id INTEGER NOT NULL,
     amount REAL NOT NULL,
@@ -14,7 +16,7 @@ CREATE TABLE expenses (
     FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
-CREATE TABLE approvals (
+CREATE TABLE IF NOT EXISTS approvals (
     id INTEGER PRIMARY KEY,
     expense_id INTEGER NOT NULL,
     status TEXT NOT NULL,

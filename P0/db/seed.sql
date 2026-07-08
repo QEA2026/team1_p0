@@ -9,7 +9,7 @@ INSERT INTO users (username, password, role) VALUES
 ('manager_eve', 'manager123', 'manager');
 
 -- Insert sample expenses
-INSERT INTO expenses (user_id, amount, exp_description, date) VALUES
+INSERT INTO expenses (user_id, amount, description, date) VALUES
 (1, 45.99, 'Lunch meeting with client', '2026-06-08'),
 (1, 120.00, 'Software training course', '2026-06-07'),
 (1, 25.50, 'Office supplies', '2026-06-09'),
