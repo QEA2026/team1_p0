@@ -1,0 +1,27 @@
+package com.revature.DAOs;
+
+import java.util.ArrayList;
+
+import com.revature.models.Expense;
+
+public interface ExpenseDAOInterface {
+    
+    ArrayList<Expense> getExpenses();
+
+    ArrayList<Expense> getExpensesByEmployee(String username);
+
+    ArrayList<Expense> getExpensesByStatus(String status);
+
+    ArrayList<Expense> getExpensesByDate(String date);
+
+    ArrayList<Expense> getExpensesByCategory(String category);
+
+    
+
+    
+
+
+
+    
+
+}

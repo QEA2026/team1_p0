@@ -1,7 +1,12 @@
+C:\Users\Audrey\team1_p0\P0\manager_app\src\main\java\com\revature\controllers\AuthController.java
+C:\Users\Audrey\team1_p0\P0\manager_app\src\main\java\com\revature\controllers\ManagerController.java
 C:\Users\Audrey\team1_p0\P0\manager_app\src\main\java\com\revature\DAOs\AuthDAO.java
 C:\Users\Audrey\team1_p0\P0\manager_app\src\main\java\com\revature\DAOs\ManagerDAO.java
 C:\Users\Audrey\team1_p0\P0\manager_app\src\main\java\com\revature\DAOs\ManagerDAOInterface.java
+C:\Users\Audrey\team1_p0\P0\manager_app\src\main\java\com\revature\Launcher.java
 C:\Users\Audrey\team1_p0\P0\manager_app\src\main\java\com\revature\Main.java
+C:\Users\Audrey\team1_p0\P0\manager_app\src\main\java\com\revature\models\Approval.java
+C:\Users\Audrey\team1_p0\P0\manager_app\src\main\java\com\revature\models\Expense.java
 C:\Users\Audrey\team1_p0\P0\manager_app\src\main\java\com\revature\models\LoginDTO.java
 C:\Users\Audrey\team1_p0\P0\manager_app\src\main\java\com\revature\models\Manager.java
 C:\Users\Audrey\team1_p0\P0\manager_app\src\main\java\com\revature\utils\ConnectionUtil.java

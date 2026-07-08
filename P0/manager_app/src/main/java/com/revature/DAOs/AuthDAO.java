@@ -1,27 +1,19 @@
-
-
 package com.revature.DAOs;
-
-/* 
-import com.revature.models.Manager;
-import com.revature.models.Role;
-import com.revature.utils.ConnectionUtil;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-*/
+import com.revature.models.User;
+import com.revature.utils.ConnectionUtil;
+
 
 public class AuthDAO {
 
-    //for THIS method in particular, dince we don't have username/password, we'll use first_name/last_name
-    //change accordingly for your own application.
- /* 
-    public Manager login(String username, String password){
+    // login using username and password 
+    public User login(String username, String password){
         try( Connection conn = ConnectionUtil.getConnection()){
-            String sql = "select * from employees where username = ? and password = ?;";
+            String sql = "select * from users where username = ? and password = ?;";
 
             PreparedStatement ps =conn.prepareStatement(sql);
 
@@ -32,18 +24,15 @@ public class AuthDAO {
 
             //since we're only expecting one record, we can just use an if with rs.next() instead of while
             if(rs.next()){
-                int roleFK = rs.getInt("role_id_fk");
-                RoleDAO rDAO = new RoleDAO();
-                Role role = rDAO.getRoleById(roleFK);
 
-                Manager m = new Manager(
-                        rs.getInt("employee_id"),
-                        rs.getString("first_name"),
-                        rs.getString("last_name"),
-                        role
-                );
+                User m = new User(
+            
+                        rs.getInt("user_id"),
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getString("role"));
 
-                return e; //returning the Employee with the matching first_name/last_name
+                return m; //returning the Employee with the matching username/password
             }
 
 
@@ -54,7 +43,13 @@ public class AuthDAO {
 
         return null;
     }
-        */
+
+    public User logout(User u)
+    {
+        u = null;
+        return u;
+    }
+        
 
     
 }
