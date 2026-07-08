@@ -16,6 +16,8 @@ public interface ExpenseDAOInterface {
 
     ArrayList<Expense> getExpensesByCategory(String category);
 
+    Expense getExpenseByID(int id);
+
     
 
     

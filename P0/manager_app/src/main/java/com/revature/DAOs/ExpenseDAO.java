@@ -147,7 +147,7 @@ public class ExpenseDAO implements ExpenseDAOInterface{
     {
         try (Connection conn = ConnectionUtil.getConnection()) {
 
-            String sql = "select * from expenses where description like ?;";
+            String sql = "select * from expenses where exp_description like ?;";
             
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, "%" + category + "%");
@@ -167,6 +167,36 @@ public class ExpenseDAO implements ExpenseDAOInterface{
             }
 
             return expenseList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    // get expense by id 
+    @Override
+    public Expense getExpenseByID(int id)
+    {
+        try (Connection conn = ConnectionUtil.getConnection()) {
+
+            String sql = "select * from expenses where expense_id = ?;";
+            
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                Expense e = new Expense(
+
+                    rs.getInt("expense_id"),
+                    rs.getInt("user_id"),
+                    rs.getDouble("amount"),
+                    rs.getString("exp_description"),
+                    rs.getString("date")
+                );
+                return e;
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

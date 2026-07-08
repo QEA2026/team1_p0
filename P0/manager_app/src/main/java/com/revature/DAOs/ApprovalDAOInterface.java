@@ -3,16 +3,15 @@ package com.revature.DAOs;
 import java.util.ArrayList;
 
 import com.revature.models.Approval;
-import com.revature.models.User;
 
 public interface ApprovalDAOInterface {
 
      
     ArrayList<Approval> getApprovals();
 
-    ArrayList<Approval> getApprovalsByManager(User m);
+    ArrayList<Approval> getApprovalsByManager(String username);
 
-    ArrayList<Approval> getApprovalsByEmployee(User u);
+    ArrayList<Approval> getApprovalsByEmployee(String username);
 
     ArrayList<Approval> getApprovalsByStatus(String status);
 
@@ -23,6 +22,9 @@ public interface ApprovalDAOInterface {
     Approval insertApproval(Approval approval);
 
     Approval updateApproval(Approval approval);
+
+    Approval getApprovalByID(int ID);
+
 
     
     

@@ -50,4 +50,12 @@ public class Approval {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    @Override
+    public String toString()
+    {
+        return ("ID: " + this.id + ", Expense ID: " + this.expense_id + ", Status: " + this.status + ", Reviewer ID: " + this.reviewer_id + ", Comment: " + this.comment
+            + ", Review Date: " + this.review_date
+         );
+    }
 }

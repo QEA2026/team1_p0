@@ -77,102 +77,262 @@ public class Main {
                             switch(choice)
                             {
 
+                                
                                 // Expense Reports Menu
                                 case 1:
-                                    System.out.println("Expense Report Menu");
-                                    System.out.println("Select an option: ");
-                                    System.out.println("1. View all expenses");
-                                    System.out.println("2. View expenses by status");
-                                    System.out.println("3. View expenses by employee");
-                                    System.out.println("4. View expenses by date");
-                                    System.out.println("5. View expenses by category");
-                                    System.out.println("6. Exit menu");
+
+                                    while (true) { 
+                                         System.out.println("Expense Report Menu");
+                                        System.out.println("Select an option: ");
+                                        System.out.println("1. View all expenses");
+                                        System.out.println("2. View expenses by status");
+                                        System.out.println("3. View expenses by employee");
+                                        System.out.println("4. View expenses by date");
+                                        System.out.println("5. View expenses by category");
+                                        System.out.println("6. Exit menu");
 
 
-                                    int new_choice = scanner.nextInt();
+                                        int new_choice = scanner.nextInt();
 
-                                    switch (new_choice)
-                                    {
-                                        // view all expense reports
-                                        case 1:
-                                            expList = expDAO.getExpenses();
-                                            for (Expense e : expList)
-                                            {
-                                                System.out.println(e);
-                                            }
+                                        switch (new_choice)
+                                        {
+                                            // view all expense reports
+                                            case 1:
+                                                expList = expDAO.getExpenses();
+                                                for (Expense e : expList)
+                                                {
+                                                    System.out.println(e);
+                                                }
+                                                System.out.println();
+                                                break;
+
+                                            // view expense reports by status 
+                                            case 2:
+                                                System.out.println("Choose what expense reports you want to view: pending, approved or denied");
+                                                String status = scanner.next();
+                                                System.out.println("Viewing all reports that are " + status);
+                                                expList = expDAO.getExpensesByStatus(status);
+                                                for (Expense e: expList)
+                                                {
+                                                    System.out.println(e);
+                                                }
+                                                System.out.println();
+                                                break; 
+                                            
+                                            // view expense reports by employee
+                                            case 3:
+                                                System.out.println("Enter the employee's username");
+                                                String user = scanner.next();
+                                                System.out.println("Viewing reports for " + user);
+                                                expList = expDAO.getExpensesByEmployee(user);
+                                                for (Expense e: expList)
+                                                {
+                                                    System.out.println(e);
+                                                }
+                                                System.out.println();
+                                                break;
+                                            
+                                            // view expense reports by date
+                                            case 4:
+                                                System.out.println("Enter the date range: ");
+                                                System.out.println("Start date: ");
+                                                String start_date = scanner.next();
+                                                System.out.println("End date: ");
+                                                String end_date = scanner.next();
+
+                                                System.out.println("Viewing reports between " + start_date + "and " + end_date);
+                                                expList = expDAO.getExpensesByDate(start_date, end_date);
+                                                for (Expense e: expList)
+                                                {
+                                                    System.out.println(e);
+                                                }
+                                                System.out.println();
+                                                break;
+
+                                            // view expense reports by category
+
+                                            case 5:
+                                                System.out.println("Enter the keyword you want to search: ");
+                                                String category = scanner.next();
+                                                System.out.println("Viewing reports containing keyword " + category);
+
+                                                expList = expDAO.getExpensesByCategory(category);
+                                                for (Expense e: expList)
+                                                {
+                                                    System.out.println(e);
+                                                }
+                                                System.out.println();
+                                                break;
+
+                                            // exit   
+
+                                            
+
+                                        }
+                                    
+                                        if (new_choice == 6)
+                                        {
+                                            System.out.println("Exiting the expense reports menu");
                                             System.out.println();
-                                            break;
+                                        }
 
-                                        // view expense reports by status 
-                                        case 2:
-                                            System.out.println("Choose what expense reports you want to view: pending, approved or denied");
-                                            String status = scanner.next();
-                                            System.out.println("Viewing all reports that are " + status);
-                                            expList = expDAO.getExpensesByStatus(status);
-                                            for (Expense e: expList)
-                                            {
-                                                System.out.println(e);
-                                            }
-                                            System.out.println();
-                                            break; 
                                         
-                                        // view expense reports by employee
-                                        case 3:
-                                            System.out.println("Enter the employee's username");
-                                            String user = scanner.next();
-                                            System.out.println("Viewing reports for " + user);
-                                            expList = expDAO.getExpensesByEmployee(user);
-                                            for (Expense e: expList)
-                                            {
-                                                System.out.println(e);
-                                            }
-                                            System.out.println();
-                                            break;
-                                        
-                                        // view expense reports by date
-                                        case 4:
-                                            System.out.println("Enter the date range: ");
-                                            System.out.println("Start date: ");
-                                            String start_date = scanner.next();
-                                            System.out.println("End date: ");
-                                            String end_date = scanner.next();
+                                }
 
-                                            System.out.println("Viewing reports between " + start_date + "and " + end_date);
-                                            expList = expDAO.getExpensesByDate(start_date, end_date);
-                                            for (Expense e: expList)
-                                            {
-                                                System.out.println(e);
-                                            }
-                                            System.out.println();
-                                            break;
-
-                                        // view expense reports by category
-
-                                        case 5:
-                                            System.out.println("Enter the keyword you want to search: ");
-                                            String category = scanner.next();
-                                            System.out.println("Viewing reports containing keyword " + category);
-
-                                            expList = expDAO.getExpensesByCategory(category);
-                                            for (Expense e: expList)
-                                            {
-                                                System.out.println(e);
-                                            }
-                                            System.out.println();
-                                            break;
-
-                                    }   
-
-                                    
-                                    
-                                    
-
+                                // Approvals Menu
                                 case 2:
+
+                                while (true) 
+                                { 
+                                    System.out.println("Approvals Menu");
+                                    System.out.println("1. View all approvals");
+                                    System.out.println("2. View approvals by status");
+                                    System.out.println("3. View approvals by manager/reviewer");
+                                    System.out.println("4. View approvals by employee");
+                                    System.out.println("5. Update an approval");
+                                    System.out.println("6. Exit");
+                                    
+
+                                    int ch = scanner.nextInt();
+
+                                    switch(ch)
+                                    {
+                                        case 1:
+                                            appList = appDAO.getApprovals();
+                                            for (Approval a: appList)
+                                            {
+                                                System.out.println(a);
+                                                Expense e = expDAO.getExpenseByID(a.getExpense_id());
+                                                System.out.println("----------------------------------------------");
+                                                System.out.println(e);
+                                                System.out.println();
+                                                
+                                            }
+                                            System.out.println();
+                                            break;
+
+                                        // view approvals by status 
+                                        case 2:
+                                            System.out.println("Choose what approvals you want to view: pending, approved, or denied");
+                                            String status = scanner.next();
+                                            appList = appDAO.getApprovalsByStatus(status);
+                                            for (Approval a: appList)
+                                            {
+                                                System.out.println(a);
+                                                Expense e = expDAO.getExpenseByID(a.getExpense_id());
+                                                System.out.println("---------------------- Expense Report ----------------------------");
+                                                System.out.println(e);
+                                               
+                                            }
+                                            System.out.println();
+                                            break;
+                                        
+                                        // view approvals by manager
+                                        case 3:
+                                            System.out.println("Enter the manager username: ");
+                                            String user = scanner.next();
+                                            appList = appDAO.getApprovalsByManager(user);
+                                            for (Approval a: appList)
+                                            {
+                                                
+                                                Expense e = expDAO.getExpenseByID(a.getExpense_id());
+                                                System.out.println("---------------------- Expense Report ----------------------------");
+                                                System.out.println(e);
+                                                System.out.println("---------------------- Approval ----------------------------");
+                                                System.out.println(a);
+                                               
+                                            }
+                                            System.out.println();
+                                            break;
+                                        
+                                        // view approvals by employee
+                                        case 4:
+                                            System.out.println("Enter the employee username: ");
+                                            String emp = scanner.next();
+                                            appList = appDAO.getApprovalsByEmployee(emp);
+                                            for (Approval a: appList)
+                                            {
+                                                Expense e = expDAO.getExpenseByID(a.getExpense_id());
+                                                System.out.println("---------------------- Expense Report ----------------------------");
+                                                System.out.println(e);
+                                                System.out.println("---------------------- Approval ----------------------------");
+                                                System.out.println(a);
+                                               
+                                            }
+                                            System.out.println();
+                                            break;
+
+                                        // submit a new approval
+                                        case 5:
+                                            System.out.println("Here are all the current expenses and approvals: ");
+                                            
+                                            appList = appDAO.getApprovals();
+                                        
+
+                                            for (Approval a: appList)
+                                            {
+                                                Expense e = expDAO.getExpenseByID(a.getExpense_id());
+                                                System.out.println("---------------------- Expense Report ----------------------------");
+                                                System.out.println(e);
+                                                System.out.println("---------------------- Approval ----------------------------");
+                                                System.out.println(a);
+                                                System.out.println();
+                                            }
+
+                                            System.out.println("To update an approval, enter the following information: ");
+                                            System.out.println("ID of the Approval you want to update: ");
+                                            int app_id = scanner.nextInt();
+
+                                            Approval a = appDAO.getApprovalByID(app_id);
+                                            int exp_id = a.getExpense_id();
+
+                                            System.out.println("Selected approval: ");
+                                            System.out.println(a);
+
+                                            System.out.println();
+
+                                            System.out.println("Status of the approval: ");
+                                            String app_status = scanner.next();
+
+                                            String temp = scanner.nextLine(); // consume the newline character
+                                            System.out.println("Comment you want to add: ");
+                                            String comments = scanner.nextLine();
+
+                                            System.out.println("Review date: ");
+                                            String review_date = scanner.nextLine();
+
+                                            
+
+                                            Approval new_app = new Approval(app_id, exp_id, app_status, loggedInManager.getUser_id(), comments, review_date);
+
+                                            appDAO.updateApproval(new_app);
+
+                                            Approval n = appDAO.getApprovalByID(app_id);
+                                        
+                                            System.out.println("Updated approval: ");
+                                            System.out.println(n);
+
+
+
+
+
+
+                                            break;        
+
+                                    }
+
+                                    if (ch == 6)
+                                    {
+                                        System.out.println("Exiting the approvals menu");
+                                        System.out.println();
+                                        break;
+                                    }
+
+                                    
+                                }
+
+
                                    
-
-                                case 3:
-
-
                             }
 
                             // exit 

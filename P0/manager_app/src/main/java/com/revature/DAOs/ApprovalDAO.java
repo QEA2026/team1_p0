@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import com.revature.models.Approval;
-import com.revature.models.User;
 import com.revature.utils.ConnectionUtil;
 
 public class ApprovalDAO implements ApprovalDAOInterface{
@@ -35,7 +34,7 @@ public class ApprovalDAO implements ApprovalDAOInterface{
                         rs.getInt("id"),
                         rs.getInt("expense_id"),
                         rs.getString("status"),
-                        rs.getInt("reviewer_id"),
+                        rs.getInt("reviewer"),
                         rs.getString("comment"),
                         rs.getString("review_date")
                         
@@ -54,15 +53,15 @@ public class ApprovalDAO implements ApprovalDAOInterface{
 
     // get approvals by Manager 
     @Override
-    public ArrayList<Approval> getApprovalsByManager(User m) {
+    public ArrayList<Approval> getApprovalsByManager(String username) {
         //instantiate a Connection object so that we can talk to the DB.
         try(Connection conn = ConnectionUtil.getConnection()){
 
             //A string that will represent our SQL statement
-            String sql = "select * from approvals where reviewer_id = ?;";
+            String sql = "select * from approvals where reviewer_id = (select user_id from users where username = ?);";
 
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, m.getUser_id());
+            ps.setString(1, username);
 
             ResultSet rs = ps.executeQuery();
 
@@ -74,7 +73,7 @@ public class ApprovalDAO implements ApprovalDAOInterface{
                         rs.getInt("id"),
                         rs.getInt("expense_id"),
                         rs.getString("status"),
-                        rs.getInt("reviewer_id"),
+                        rs.getInt("reviewer"),
                         rs.getString("comment"),
                         rs.getString("review_date")
                         
@@ -93,15 +92,15 @@ public class ApprovalDAO implements ApprovalDAOInterface{
 
     // get approvals by employee 
     @Override
-    public ArrayList<Approval> getApprovalsByEmployee(User u) {
+    public ArrayList<Approval> getApprovalsByEmployee(String username) {
         //instantiate a Connection object so that we can talk to the DB.
         try(Connection conn = ConnectionUtil.getConnection()){
 
             //A string that will represent our SQL statement
-            String sql = "select * from approvals where employee_id = ?;";
+            String sql = "select * from approvals where expense_id = (select expense_id from expenses where user_id = (select user_id from users where username = ?));";
 
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, u.getUser_id());
+            ps.setString(1, username);
 
             ResultSet rs = ps.executeQuery();
 
@@ -113,7 +112,7 @@ public class ApprovalDAO implements ApprovalDAOInterface{
                         rs.getInt("id"),
                         rs.getInt("expense_id"),
                         rs.getString("status"),
-                        rs.getInt("reviewer_id"),
+                        rs.getInt("reviewer"),
                         rs.getString("comment"),
                         rs.getString("review_date")
                         
@@ -151,7 +150,7 @@ public class ApprovalDAO implements ApprovalDAOInterface{
                         rs.getInt("id"),
                         rs.getInt("expense_id"),
                         rs.getString("status"),
-                        rs.getInt("reviewer_id"),
+                        rs.getInt("reviewer"),
                         rs.getString("comment"),
                         rs.getString("review_date")
                         
@@ -190,7 +189,7 @@ public class ApprovalDAO implements ApprovalDAOInterface{
                         rs.getInt("id"),
                         rs.getInt("expense_id"),
                         rs.getString("status"),
-                        rs.getInt("reviewer_id"),
+                        rs.getInt("reviewer"),
                         rs.getString("comment"),
                         rs.getString("review_date")
                         
@@ -214,7 +213,7 @@ public class ApprovalDAO implements ApprovalDAOInterface{
         
         try(Connection conn = ConnectionUtil.getConnection()){
 
-            String sql = "insert into approvals (expense_id, status, reviewer_id, comment, review_date) values (?, ?, ?, ?, ?);";
+            String sql = "insert into approvals (expense_id, status, reviewer, comment, review_date) values (?, ?, ?, ?, ?);";
 
             PreparedStatement ps = conn.prepareStatement(sql);
 
@@ -243,13 +242,16 @@ public class ApprovalDAO implements ApprovalDAOInterface{
     {
         try(Connection conn = ConnectionUtil.getConnection()){
 
-            String sql = "update approvals set status = ?, comment = ? where id = ?;";
+            String sql = "update approvals set status = ?, reviewer = ?, comment = ?, review_date = ? where id = ?;";
 
             PreparedStatement ps = conn.prepareStatement(sql);
 
             ps.setString(1, approval.getStatus());
-            ps.setString(2, approval.getComment());
-            ps.setInt(3, approval.getId());
+            ps.setInt(2, approval.getReviewer_id());
+            ps.setString(3, approval.getComment());
+            ps.setString(4, approval.getReview_date());
+            ps.setInt(5, approval.getId());
+
 
             int rowsUpdated = ps.executeUpdate();
 
@@ -262,6 +264,40 @@ public class ApprovalDAO implements ApprovalDAOInterface{
         }
         return null;
     }
+
+    @Override
+    public Approval getApprovalByID(int id)
+    {
+         try (Connection conn = ConnectionUtil.getConnection()) {
+
+            String sql = "select * from approvals where id = ?;";
+            
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                Approval a = new Approval(
+
+                    rs.getInt("id"),
+                    rs.getInt("expense_id"),
+                    rs.getString("status"),
+                    rs.getInt("reviewer"),
+                    rs.getString("comment"),
+                    rs.getString("review_date")
+                );
+                return a;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+
+    
 
     
 }
