@@ -44,8 +44,8 @@
                 <td>{{ item.comment or "" }}</td>
                 <td>
                     {% if item.status == "pending" %}
-                    <a href="{{ url_for('edit_expense', expense_id=item.expense.id) }}">Edit</a>
-                    <form method="post" action="{{ url_for('delete_expense', expense_id=item.expense.id) }}"
+                    <a href="{{ url_for('edit_expense', expense_id=item.expense.expense_id) }}">Edit</a>
+                    <form method="post" action="{{ url_for('delete_expense', expense_id=item.expense.expense_id) }}"
                           onsubmit="return confirm('Delete this expense?');" class="inline-form">
                         <button type="submit">Delete</button>
                     </form>

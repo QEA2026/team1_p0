@@ -3,7 +3,7 @@ from typing import Optional
 
 @dataclass
 class User:
-    id: Optional[int]
+    user_id: Optional[int]
     username: str
     password: str
     role: str

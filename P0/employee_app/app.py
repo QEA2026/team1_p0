@@ -52,7 +52,7 @@ def login():
         if user is None:
             flash("Invalid username or password.")
             return render_template("login.html")
-        session["user_id"] = user.id
+        session["user_id"] = user.user_id
         session["username"] = user.username
         return redirect(url_for("dashboard"))
     return render_template("login.html")

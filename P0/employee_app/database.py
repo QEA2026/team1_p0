@@ -25,7 +25,7 @@ def login(username, password):
                 )
                 row = cursor.fetchone()
                 if row:
-                        return User(id = row['id'],username=row['username'],password=row['password'],role=row['role'])
+                        return User(user_id = row['user_id'],username=row['username'],password=row['password'],role=row['role'])
                 return None
         except sqlite3.Error as error:
                 raise RuntimeError(f"Failed to log in user: {error}") from error
@@ -38,7 +38,7 @@ def create_expense(user_id, amount, description, date):
         try:
                 conn, cursor = get_connection()
                 cursor.execute(
-                        "INSERT INTO EXPENSES (user_id, amount, description, date) VALUES (?, ?, ?, ?);",
+                        "INSERT INTO EXPENSES (user_id, amount, exp_description, date) VALUES (?, ?, ?, ?);",
                         (user_id, amount, description, date),
                 )
                 expense_id = cursor.lastrowid
@@ -60,18 +60,18 @@ def get_employee_expenses(user_id):
         try:
                 conn, cursor = get_connection()
                 cursor.execute(
-                        """SELECT e.id, e.user_id, e.amount, e.description, e.date,
+                        """SELECT e.expense_id, e.user_id, e.amount, e.exp_description, e.date,
                                           a.status, a.comment
                            FROM EXPENSES e
-                           LEFT JOIN APPROVALS a ON a.expense_id = e.id
+                           LEFT JOIN APPROVALS a ON a.expense_id = e.expense_id
                            WHERE e.user_id = ?
-                           ORDER BY e.date DESC, e.id DESC;""",
+                           ORDER BY e.date DESC, e.expense_id DESC;""",
                         (user_id,),
                 )
                 rows = cursor.fetchall()
                 expenses = []
                 for row in rows:
-                        expense = Expense(id=row['id'],user_id=row['user_id'],amount=row['amount'],description=row['description'],date=row['date'])
+                        expense = Expense(expense_id=row['expense_id'],user_id=row['user_id'],amount=row['amount'],description=row['exp_description'],date=row['date'])
                         expenses.append({
                                 "expense": expense,
                                 "status": row['status'] or 'pending',
@@ -88,10 +88,10 @@ def get_expense_by_id(expense_id):
         conn = None
         try:
                 conn, cursor = get_connection()
-                cursor.execute("SELECT * FROM EXPENSES WHERE id = ?;", (expense_id,))
+                cursor.execute("SELECT * FROM EXPENSES WHERE expense_id = ?;", (expense_id,))
                 row = cursor.fetchone()
                 if row:
-                        return Expense(id=row['id'],user_id=row['user_id'],amount=row['amount'],description=row['description'],date=row['date'])
+                        return Expense(expense_id=row['expense_id'],user_id=row['user_id'],amount=row['amount'],description=row['exp_description'],date=row['date'])
                 return None
         except sqlite3.Error as error:
                 raise RuntimeError(f"Failed to load expense: {error}") from error
@@ -104,16 +104,16 @@ def get_expense_with_status(expense_id):
         try:
                 conn, cursor = get_connection()
                 cursor.execute(
-                        """SELECT e.id, e.user_id, e.amount, e.description, e.date, a.status
+                        """SELECT e.expense_id, e.user_id, e.amount, e.exp_description, e.date, a.status
                            FROM EXPENSES e
-                           LEFT JOIN APPROVALS a ON a.expense_id = e.id
-                           WHERE e.id = ?;""",
+                           LEFT JOIN APPROVALS a ON a.expense_id = e.expense_id
+                           WHERE e.expense_id = ?;""",
                         (expense_id,),
                 )
                 row = cursor.fetchone()
                 if row is None:
                         return None
-                expense = Expense(id=row['id'],user_id=row['user_id'],amount=row['amount'],description=row['description'],date=row['date'])
+                expense = Expense(expense_id=row['expense_id'],user_id=row['user_id'],amount=row['amount'],description=row['exp_description'],date=row['date'])
                 return {"expense": expense, "status": row['status'] or 'pending'}
         except sqlite3.Error as error:
                 raise RuntimeError(f"Failed to load expense: {error}") from error
@@ -126,8 +126,8 @@ def update_expense(expense_id, amount, description, date):
         try:
                 conn, cursor = get_connection()
                 cursor.execute(
-                        """UPDATE EXPENSES SET amount = ?, description = ?, date = ?
-                           WHERE id = ? AND id IN (
+                        """UPDATE EXPENSES SET amount = ?, exp_description = ?, date = ?
+                           WHERE expense_id = ? AND expense_id IN (
                                    SELECT expense_id FROM APPROVALS WHERE expense_id = ? AND status = 'pending'
                            );""",
                         (amount, description, date, expense_id, expense_id),
@@ -152,7 +152,7 @@ def delete_expense(expense_id):
                 if row is None or row['status'] != 'pending':
                         return False
                 cursor.execute("DELETE FROM APPROVALS WHERE expense_id = ?;", (expense_id,))
-                cursor.execute("DELETE FROM EXPENSES WHERE id = ?;", (expense_id,))
+                cursor.execute("DELETE FROM EXPENSES WHERE expense_id = ?;", (expense_id,))
                 conn.commit()
                 return cursor.rowcount > 0
         except sqlite3.Error as error:

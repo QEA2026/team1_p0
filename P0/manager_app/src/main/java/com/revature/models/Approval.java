@@ -2,16 +2,16 @@ package com.revature.models;
 
 public class Approval {
 
-    private int id;
+    private int approval_id;
     private int expense_id;
     private String status;
     private int reviewer_id;
     private String comment;
     private String review_date;
-    
 
-    public Approval(int id, int expense_id, String status, int reviewer_id, String comment, String review_date) {
-        this.id = id;
+
+    public Approval(int approval_id, int expense_id, String status, int reviewer_id, String comment, String review_date) {
+        this.approval_id = approval_id;
         this.expense_id = expense_id;
         this.status = status;
         this.reviewer_id = reviewer_id;
@@ -19,8 +19,8 @@ public class Approval {
         this.review_date = review_date;
     }
 
-    public int getId() {
-        return this.id;
+    public int getApproval_id() {
+        return this.approval_id;
     }
 
     public int getExpense_id() {
@@ -54,7 +54,7 @@ public class Approval {
     @Override
     public String toString()
     {
-        return ("ID: " + this.id + ", Expense ID: " + this.expense_id + ", Status: " + this.status + ", Reviewer ID: " + this.reviewer_id + ", Comment: " + this.comment
+        return ("ID: " + this.approval_id + ", Expense ID: " + this.expense_id + ", Status: " + this.status + ", Reviewer ID: " + this.reviewer_id + ", Comment: " + this.comment
             + ", Review Date: " + this.review_date
          );
     }

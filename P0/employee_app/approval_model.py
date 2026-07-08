@@ -4,7 +4,7 @@ from typing import Optional
 
 @dataclass
 class Approval:
-    id: Optional[int]
+    approval_id: Optional[int]
     expense_id: int
     status: str
     reviewer: Optional[int]

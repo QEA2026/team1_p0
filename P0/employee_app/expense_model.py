@@ -4,7 +4,7 @@ from typing import Optional
 
 @dataclass
 class Expense:
-    id: Optional[int]
+    expense_id: Optional[int]
     user_id: int
     amount: float
     description: str
