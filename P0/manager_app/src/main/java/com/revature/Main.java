@@ -44,16 +44,22 @@ public class Main {
 
                     try {
                         User loggedInManager = authDAO.login(username, password);
-                        System.out.println("Logged in as: " + loggedInManager.getUsername() + ", ID: " +loggedInManager.getUser_id());
+
+                        if (loggedInManager == null) {
+                            System.out.println("Invalid username or password. Please try again.");
+                            break;
+                        }
+
+                        System.out.println("Logged in as: " + loggedInManager.getUsername() + ", ID: " + loggedInManager.getUser_id());
 
                         // check if logged in user is a manager
-                         if (loggedInManager.getRole().equalsIgnoreCase("manager") == false)
-                            {
-                                System.out.println("Sorry, you do not have access!");
-                                System.out.println("Logging out and exiting the program...");
-                                loggedInManager = authDAO.logout(loggedInManager);
-                                break;
-                            }
+                        if (loggedInManager.getRole().equalsIgnoreCase("manager") == false)
+                        {
+                            System.out.println("Sorry, you do not have access!");
+                            System.out.println("Logging out and exiting the program...");
+                            loggedInManager = authDAO.logout(loggedInManager);
+                            break;
+                        }
                         
                         // Menu for managers 
                         while (true)
