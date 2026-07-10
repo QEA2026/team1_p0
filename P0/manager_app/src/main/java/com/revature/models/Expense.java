@@ -36,6 +36,11 @@ public class Expense {
         return this.description;
     }
 
+    public String getDate()
+    {
+        return this.date;
+    }
+
     public void setDescription(String description)
     {
         this.description = description;
@@ -44,6 +49,8 @@ public class Expense {
     @Override
     public String toString()
     {
-        return ("ID: " + this.expense_id + ", User ID: " + this.user_id + ", Amount: " + this.amount + ", Description: " + this.description);
+        String e_dollar = String.format("$ %.2f", this.amount);
+        return ("ID: " + this.expense_id + ", User ID: " + this.user_id + ", Amount: " + e_dollar + 
+        ", Description: " + this.description + ", Date: " + this.date);
     }
 }

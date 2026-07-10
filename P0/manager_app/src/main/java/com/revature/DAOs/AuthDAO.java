@@ -37,7 +37,6 @@ public class AuthDAO {
                 return m; //returning the Employee with the matching username/password
             } else
             {
-                System.out.println("Invalid username or password. Please try again.");
                 return null;
             }
 
