@@ -3,6 +3,7 @@ import sqlite3
 
 from user_model import User
 from expense_model import Expense
+from logging_config import logger
 
 DB_PATH = os.path.join(os.path.dirname(__file__), "..", "db", "expense_manager.db")
 
@@ -12,6 +13,7 @@ def get_connection():
                 conn.row_factory = sqlite3.Row
                 return conn, conn.cursor()
         except sqlite3.Error as error:
+                logger.exception("Failed to connect to database")
                 raise RuntimeError(f"Failed to connect to database: {error}") from error
 
 
@@ -28,6 +30,7 @@ def login(username, password):
                         return User(user_id = row['user_id'],username=row['username'],password=row['password'],role=row['role'])
                 return None
         except sqlite3.Error as error:
+                logger.exception("Failed to log in user '%s'", username)
                 raise RuntimeError(f"Failed to log in user: {error}") from error
         finally:
                 if conn is not None:
@@ -49,6 +52,7 @@ def create_expense(user_id, amount, description, date):
                 conn.commit()
                 return expense_id
         except sqlite3.Error as error:
+                logger.exception("Failed to create expense for user_id=%s", user_id)
                 raise RuntimeError(f"Failed to create expense: {error}") from error
         finally:
                 if conn is not None:
@@ -79,6 +83,7 @@ def get_employee_expenses(user_id):
                         })
                 return expenses
         except sqlite3.Error as error:
+                logger.exception("Failed to load expenses for user_id=%s", user_id)
                 raise RuntimeError(f"Failed to load employee expenses: {error}") from error
         finally:
                 if conn is not None:
@@ -94,6 +99,7 @@ def get_expense_by_id(expense_id):
                         return Expense(expense_id=row['expense_id'],user_id=row['user_id'],amount=row['amount'],description=row['exp_description'],date=row['date'])
                 return None
         except sqlite3.Error as error:
+                logger.exception("Failed to load expense_id=%s", expense_id)
                 raise RuntimeError(f"Failed to load expense: {error}") from error
         finally:
                 if conn is not None:
@@ -116,6 +122,7 @@ def get_expense_with_status(expense_id):
                 expense = Expense(expense_id=row['expense_id'],user_id=row['user_id'],amount=row['amount'],description=row['exp_description'],date=row['date'])
                 return {"expense": expense, "status": row['status'] or 'pending'}
         except sqlite3.Error as error:
+                logger.exception("Failed to load expense_id=%s", expense_id)
                 raise RuntimeError(f"Failed to load expense: {error}") from error
         finally:
                 if conn is not None:
@@ -135,6 +142,7 @@ def update_expense(expense_id, amount, description, date):
                 conn.commit()
                 return cursor.rowcount > 0
         except sqlite3.Error as error:
+                logger.exception("Failed to update expense_id=%s", expense_id)
                 raise RuntimeError(f"Failed to update expense: {error}") from error
         finally:
                 if conn is not None:
@@ -156,6 +164,7 @@ def delete_expense(expense_id):
                 conn.commit()
                 return cursor.rowcount > 0
         except sqlite3.Error as error:
+                logger.exception("Failed to delete expense_id=%s", expense_id)
                 raise RuntimeError(f"Failed to delete expense: {error}") from error
         finally:
                 if conn is not None:

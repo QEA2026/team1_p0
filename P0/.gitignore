@@ -16,6 +16,9 @@ dist/
 *.egg-info/
 .eggs/
 
+# Maven build output
+target/
+
 # Testing and coverage
 .pytest_cache/
 .coverage

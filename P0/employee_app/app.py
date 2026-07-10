@@ -1,12 +1,22 @@
 from datetime import date
 
 from flask import Flask, render_template, request, redirect, url_for, session, flash, abort
+from werkzeug.exceptions import HTTPException
 
 import database
 from auth import login_required
+from logging_config import logger
 
 app = Flask(__name__)
 app.secret_key = "dev"
+
+
+@app.errorhandler(Exception)
+def handle_unexpected_error(error):
+    if isinstance(error, HTTPException):
+        return error
+    logger.exception("Unhandled error: %s", error)
+    raise error
 
 
 def _validate_expense_form(form):
@@ -50,16 +60,20 @@ def login():
         password = request.form["password"]
         user = database.login(username, password)
         if user is None:
+            logger.warning("Failed login attempt for username '%s'", username)
             flash("Invalid username or password.")
             return render_template("login.html")
         session["user_id"] = user.user_id
         session["username"] = user.username
+        logger.info("User '%s' (id=%s) logged in", user.username, user.user_id)
         return redirect(url_for("dashboard"))
     return render_template("login.html")
 
 
 @app.route("/logout")
 def logout():
+    if "user_id" in session:
+        logger.info("User '%s' (id=%s) logged out", session.get("username"), session.get("user_id"))
     session.clear()
     return redirect(url_for("login"))
 
@@ -79,7 +93,8 @@ def submit_expense():
         return redirect(url_for("dashboard"))
     amount, description, expense_date = parsed
 
-    database.create_expense(session["user_id"], amount, description, expense_date)
+    expense_id = database.create_expense(session["user_id"], amount, description, expense_date)
+    logger.info("User id=%s created expense id=%s amount=%s", session["user_id"], expense_id, amount)
     flash("Expense submitted.")
     return redirect(url_for("dashboard"))
 
@@ -106,6 +121,7 @@ def edit_expense(expense_id):
         amount, description, expense_date = parsed
 
         if database.update_expense(expense_id, amount, description, expense_date):
+            logger.info("User id=%s updated expense id=%s", session["user_id"], expense_id)
             flash("Expense updated.")
         else:
             flash("Expense could no longer be edited.")
